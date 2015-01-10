@@ -52,7 +52,8 @@
     <title>ShopInFlock 101</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <link href="css/bootstrap-theme.css" rel="stylesheet"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -61,9 +62,10 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-    
+    <!--angularjs-->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.js"></script>    
-    <script src="Scripts/ui-bootstrap-tpls-0.12.0.js" type="text/javascript"></script>
+    <!--angular bootstrap-->
+    <script src="scripts/ui-bootstrap-tpls-0.12.0.js" type="text/javascript"></script>
     <script type="text/javascript" src="app.js"></script>
     
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -149,7 +151,7 @@
               >
               <alert type="success" ng-show="addShopCtrl.showAlert"
               ng-animate="{addShopCtrl.showAlert: 'enter-slide', hide: 'leave-fade'}" 
-              >Well done! You've added another great shop.</alert> 
+              class="enter-slide">Well done! You've added another great shop.</alert> 
               </div>
               
             </form>
