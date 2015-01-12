@@ -1,0 +1,58 @@
+<div class="container">
+  <!--  add shop Form -->
+  <form name="addShop" ng-controller="addShopController as addShopCtrl"
+                  ng-submit="addShopCtrl.addShop()">
+
+    <!--  Live Preview -->
+              <blockquote>
+             
+              <rating ng-model="addShopCtrl.shop.stars"></rating>
+  				<strong>{{addShopCtrl.shop.name}}</br></strong>
+  				<a href={{addShopCtrl.shop.link}}>{{addShopCtrl.shop.link}}</a></br>
+  				<em>{{addShopCtrl.shop.description}}</em></br>
+  			</blockquote>
+
+              <!--  Review Form -->
+              <h4>Add a shop</h4>
+              
+              <fieldset class="form-group">
+              <rating ng-model="addShopCtrl.shop.stars"></rating>
+              </fieldset>
+              <fieldset class="form-group">
+                <input ng-model="addShopCtrl.shop.name" class="form-control" placeholder="My Favourite Shop" title="Name"></input>
+              </fieldset>
+              <fieldset class="form-group">
+                <input ng-model="addShopCtrl.shop.link" type="url" class="form-control" placeholder="www.example.com" title="Link" />
+              </fieldset>
+              <fieldset class="form-group">
+              	<textarea ng-model="addShopCtrl.shop.description" class="form-control" placeholder="Write a short description of the shop..." title="Description"></textarea>
+              </fieldset>
+              <fieldset class="form-group">
+                <input type="submit" class="btn btn-primary pull-right" value="Add shop" />
+              </fieldset>
+              <div>
+              <alert type="success" ng-show="addShopCtrl.showAlert"
+              ng-animate="{addShopCtrl.showAlert: 'enter-slide', hide: 'leave-fade'}" 
+              class="enter-slide">Well done! You've added another great shop.</alert> 
+              </div>
+              
+            </form>
+          
+
+
+  
+  	<!--shop list-->
+  	<ul class="list-unstyled" >
+  		<h4>Favourite Shops</h4>
+  		<li ng-repeat="shop in controller.shops">
+  		<div class="shop">
+  		<rating ng-model="shop.stars" readonly="true">{{shop.stars}}</rating>
+  			<strong>{{shop.name}}</strong></br>
+  			<a href={{shop.link}}>{{shop.link}}</a></br>
+  			<em>{{shop.description}}</em></br>
+  		</div>
+  		</li>
+  	</ul>
+  	
+  </div>
+ 	

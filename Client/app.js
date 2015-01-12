@@ -1,5 +1,15 @@
 (function(){
-	var app = angular.module("SIF", ["ui.bootstrap"]);
+	var app = angular.module("SIF", ["ui.bootstrap", "ngRoute"]);
+	
+	app.config(['$routeProvider',
+		function ($routeProvider){
+		$routeProvider.when("/flocks", {templateUrl: 'views/flocks.html'});
+		$routeProvider.when("/shops", {templateUrl: "views/shops.html"});
+		$routeProvider.when("/lists", {templateUrl: "views/lists.html"});
+		
+		$routeProvider.otherwise({templateUrl: "views/home.html"});
+		
+	}]);
 	
 	app.controller('shopController', function(){
 		this.shops = myShops;
@@ -7,7 +17,7 @@
 	
 	app.controller('addShopController', function($timeout) {
 	this.showAlert = false;
-	console.log("1: ", this.showAlert);
+	//console.log("1: ", this.showAlert);
     this.shop = {};
 
 	var that = this;
@@ -35,9 +45,9 @@
 //dropdown controller    
 app.controller('DropdownCtrl', function ($scope, $log) {
   $scope.items = [
-    'The first choice!',
-    'And another choice for you.',
-    'but wait! A third!'
+   { text: 'Profile', url: "profile"},
+    {text: 'Settings', url: "settings"},
+    {text: 'Log out', url: "logout"}
   ];
 
   $scope.status = {
