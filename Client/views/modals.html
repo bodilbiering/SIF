@@ -1,0 +1,61 @@
+
+<div ng-controller="ModalCtrl">
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Edit Shop</h3>
+        </div>
+        <div class="modal-body">
+            <!--  add shop Form -->
+            <form name="addShop" ng-controller="addShopController as addShopCtrl"
+                  ng-submit="addShopCtrl.addShop()">
+
+                <!--  Live Preview -->
+
+                <div class="shop">
+                    <rating ng-model="editshop.stars"></rating>
+                    <strong>{{editshop.name}}</br></strong>
+                    <a href={{editshop.link}}>{{editshop.link}}</a></br>
+                    <em>{{editshop.description}}</em></br>
+                    <p>Category: {{editshop.category}}</p>
+                </div>
+
+
+                <!--  Review Form -->
+
+<hr/>
+                <fieldset class="form-group">
+                    <rating ng-model="editshop.stars"></rating>
+                </fieldset>
+                <fieldset class="form-group">
+                    <input ng-model="editshop.name" class="form-control" placeholder="My Favourite Shop" title="Name"></input>
+                </fieldset>
+                <fieldset class="form-group">
+                    <input ng-model="editshop.link" type="url" class="form-control" placeholder="www.example.com" title="Link" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <textarea ng-model="editshop.description" class="form-control" placeholder="Write a short description of the shop..." title="Description"></textarea>
+                </fieldset>
+                <fieldset class="form-group">
+                    <input ng-model="editshop.category" class="form-control" placeholder="Category" title="Category"/>
+                </fieldset>
+                <!--<fieldset class="form-group">
+                    <input type="submit" class="btn btn-primary pull-right" value="Add shop" />
+                </fieldset>-->
+                <div>
+                    <alert type="success" ng-show="addShopCtrl.showAlert"
+                           ng-animate="{addShopCtrl.showAlert: 'enter-slide', hide: 'leave-fade'}"
+                           class="enter-slide">Well done! You've added another great shop.</alert>
+                </div>
+
+            </form>
+
+        </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+
+</div>

@@ -1,5 +1,5 @@
 (function(){
-	var app = angular.module("SIF", ["ui.bootstrap", "ngRoute"]);
+	var app = angular.module("SIF", ["ui.bootstrap", "ngRoute", "customFilters"]);
 	
 	app.config(['$routeProvider',
 		function ($routeProvider){
@@ -11,8 +11,16 @@
 		
 	}]);
 	
-	app.controller('shopController', function(){
+	app.controller('shopController', function() {
 		this.shops = myShops;
+		this.products = myProducts;
+
+		this.deleteProduct = function(product){
+			var i = myProducts.indexOf(product);
+			myProducts.splice(i,1);
+		};
+
+
 	});
 	
 	app.controller('addShopController', function($timeout) {
@@ -40,7 +48,30 @@
       
       
     };
+
     });
+
+	//product controller
+	app.controller('addProductCtrl', function() {
+
+		this.product = {};
+
+		this.addProduct = function() {
+
+			myProducts.push(this.product);
+
+			this.product = {};
+
+		};
+
+	});
+    
+//header controller    
+app.controller('HeaderCtrl', function ($scope, $location) { 
+    $scope.isActive = function (viewLocation) { 
+        return viewLocation === $location.path();
+    };
+});
 
 //dropdown controller    
 app.controller('DropdownCtrl', function ($scope, $log) {
@@ -70,20 +101,63 @@ app.controller('DropdownCtrl', function ($scope, $log) {
 		name: 'Enzo',
 		link: "http://www.enzoshop.dk/",
 		description: "Great clothes",
-		logo: ""
+		logo: "",
+		category: "Clothes"
 	},
-	{
-		name: 'Superlove',
-		link: "http://www.superlove.dk/",
-		description: "Great clothes and accessories",
-		logo: ""
-	},
+
 	{
 		name: 'Greenskin',
 		link: "http://www.greenskin.dk/",
 		description: "Green skincare and beauty treatments",
-		logo: ""
-	}
-	]
+		logo: "",
+		category: "Beauty"
+	},
+		{
+			name: 'Superlove',
+			link: "http://www.superlove.dk/",
+			description: "Great clothes and accessories",
+			logo: "",
+			category: "Clothes"
+		}
+	];
+
+	var myProducts = [
+		{
+			stars: 5,
+			item: "mit største ønske",
+			link: "www.abe.dk",
+			description: "",
+			category: "ønskeseddel 1",
+			shop: "Enzo"
+		},
+		{
+			item: "mit største ønske 2",
+			link: "www.abe.dk",
+			description: "",
+			category: "ønskeseddel 1",
+			shop: "Enzo"
+		},
+		{
+			item: "mit største ønske 3",
+			link: "www.abe.dk",
+			description: "",
+			category: "ønskeseddel 2",
+			shop: ""
+		},
+		{
+			item: "LEGO",
+			link: "www.abe.dk",
+			description: "",
+			category: "Storms ønsker",
+			shop: "BR"
+		},
+		{
+			item: "minecraft",
+			link: "www.abe.dk",
+			description: "",
+			category: "Storms ønsker",
+			shop: "BR"
+		}
+	];
 	
 })();

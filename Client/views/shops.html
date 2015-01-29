@@ -1,16 +1,30 @@
 <div class="container">
+<div class="panel panel-default row" ng-controller="collectionsCtrl">
+<div class="col-xs-4" >
+    <a ng-click="selectCategory()"
+       class="btn btn-block btn-default btn-lg" style="text-overflow:ellipsis">All</a>
+    <a ng-repeat="item in controller.shops | orderBy:'category' | unique:'category'"
+       ng-click="selectCategory(item)" class="btn btn-block btn-default btn-lg" style="text-overflow:ellipsis;white-space:nowrap;
+    overflow:hidden;">
+        {{item}}
+    </a>
+</div>
+
+<div class="col-xs-8">
+<div class="well">
   <!--  add shop Form -->
   <form name="addShop" ng-controller="addShopController as addShopCtrl"
                   ng-submit="addShopCtrl.addShop()">
 
     <!--  Live Preview -->
-              <blockquote>
-             
-              <rating ng-model="addShopCtrl.shop.stars"></rating>
+              <!--<blockquote>-->
+             <div class="shop">
+              <rating ng-model="addShopCtrl.shop.stars" readonly="true"></rating>
   				<strong>{{addShopCtrl.shop.name}}</br></strong>
   				<a href={{addShopCtrl.shop.link}}>{{addShopCtrl.shop.link}}</a></br>
   				<em>{{addShopCtrl.shop.description}}</em></br>
-  			</blockquote>
+  				</div>
+  			<!--</blockquote>-->
 
               <!--  Review Form -->
               <h4>Add a shop</h4>
@@ -19,7 +33,7 @@
               <rating ng-model="addShopCtrl.shop.stars"></rating>
               </fieldset>
               <fieldset class="form-group">
-                <input ng-model="addShopCtrl.shop.name" class="form-control" placeholder="My Favourite Shop" title="Name"></input>
+                <input ng-model="addShopCtrl.shop.name" required class="form-control" placeholder="My Favourite Shop" title="Name"></input>
               </fieldset>
               <fieldset class="form-group">
                 <input ng-model="addShopCtrl.shop.link" type="url" class="form-control" placeholder="www.example.com" title="Link" />
@@ -38,21 +52,51 @@
               
             </form>
           
-
-
+</div>
+<div>
   
   	<!--shop list-->
+    <div class="page-header">
+        <h1>Shop Collection: {{getSelectedCategory()}}
+
+
+        </h1>
+        <div>
+            <a role="button" ng-click="" class="glyphicon glyphicon-cog btn" ></a>
+            <span class="label label-info">Public</span>
+            </div>
+    </div>
+
   	<ul class="list-unstyled" >
-  		<h4>Favourite Shops</h4>
-  		<li ng-repeat="shop in controller.shops">
-  		<div class="shop">
+  		<li ng-repeat="shop in controller.shops | filter:categoryFilterFn">
+            <div    >
+  		<div class="shop row" ng-controller="ModalCtrl">
+            <div class="col-sm-10">
   		<rating ng-model="shop.stars" readonly="true">{{shop.stars}}</rating>
   			<strong>{{shop.name}}</strong></br>
   			<a href={{shop.link}}>{{shop.link}}</a></br>
   			<em>{{shop.description}}</em></br>
-  		</div>
+            </div>
+            <div class="col-sm-2" >
+
+                <p>
+                <button type="button" ng-click="open('',shop)" class="btn btn-default" >Edit</button>
+                <button type="button" ng-click="" class="btn btn-default">More</button>
+                </p>
+
+            </div>
+
+
+
+        </div>
+                </div>
   		</li>
-  	</ul>
-  	
+    </ul>
+
+    <ng-include src="'views/modals.html'"></ng-include>
+
+  	</div>
   </div>
+  </div>
+    </div>
  	

@@ -16,6 +16,15 @@
     	padding: 4px;
     	font-size: 16px;
     }
+
+    .product{
+        border-style: solid;
+        border-radius: 6px;
+        border-color: indianred;
+        margin: 2px;
+        padding: 4px;
+        font-size: 16px;
+    }
     
     .enter-slide{
    -webkit-animation: myfirst 5s; /* Chrome, Safari, Opera */
@@ -68,6 +77,9 @@
     <script src="scripts/ui-bootstrap-tpls-0.12.0.js" type="text/javascript"></script>
     <script type="text/javascript" src="app.js"></script>
     <script type="text/javascript" src="ngmodules/angular-route.js"></script>
+      <script type="text/javascript" src="filters/customFilters.js"></script>
+      <script type="text/javascript" src="controllers/collectionsController.js"></script>
+      <script type="text/javascript" src="controllers/modalController.js"></script>
     
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
@@ -78,11 +90,12 @@
   <body ng-controller="shopController as controller" >
   	<div class="navbar navbar-inverse navbar-fixed-top" >
   	
-  		<div class="container">
-  			<div class="navbar-header">
-  			<a href="#/home" class="navbar-brand">ShopInFlock</a>
+  		<div class="container" ng-controller="HeaderCtrl">
+  			<div class="navbar-header" >
+  			<a  href="#/home" class="navbar-brand" ng-class="{ active: isActive('/home')}">ShopInFlock</a>
   			
   			
+  				
   			<button type="button" class="navbar-toggle"
   				 ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed" >
   				<span class="sr-only">Toggle navigation</span>
@@ -93,14 +106,16 @@
   			
   			<div class="navbar-collapse" collapse="isCollapsed" ng-controller="DropdownCtrl">
   				<ul class="navbar-nav nav">
-  					<li><a href="#/flocks">My Flocks</a></li>
-  					<li ><a href="#/shops">My Shops</a></li>
-  					<li><a href="#/lists">My Lists</a></li>
+  					<li ng-class="{ active: isActive('/flocks')}"><a href="#/flocks">My Flocks</a></li>
+  					<li ng-class="{ active: isActive('/shops')}"><a href="#/shops">My Shops</a></li>
+  					<li ng-class="{ active: isActive('/lists')}"><a href="#/lists">My Lists</a></li>
   				</ul>
+  				
   				<ul class="navbar-nav nav navbar-right">
   					<li><a href="#" class="glyphicon glyphicon-signal"></a></li>
   					<li><a href="#/notifications" class="glyphicon glyphicon-bell"></a></li>
   					<!--<li><a href="#" class="glyphicon glyphicon-user"></a></li>-->
+  					
   					<!--dropdown dashboard-->
   					<li class="dropdown" dropdown on-toggle="toggled(open)">
   					<a href="#" class="dropdown-toggle glyphicon glyphicon-user" dropdown-toggle>
@@ -115,11 +130,12 @@
   				</ul> 
   			</div>
   		</div>
+  		
   </div>
   
   <div class="container">
   <div ng-view></div>
- 	<!--<ng-include src="'views/flocks.html'"> </ng-include>-->
+ 	
  	</div>
   
   
