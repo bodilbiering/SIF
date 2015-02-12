@@ -62,17 +62,29 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet"/>
-    <link href="css/bootstrap-theme.css" rel="stylesheet"/>
+      <link href="css/bootstrap-theme.css" rel="stylesheet"/>
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+
+      <!--from satellizer-->
+    <link href="stylesheets/styles.css" rel="stylesheet">
+      <!--<link href="//fonts.googleapis.com/css?family=Roboto|Montserrat:400,700|Open+Sans:400,300,600" rel="stylesheet">
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">-->
+      <!--<link href="//cdnjs.cloudflare.com/ajax/libs/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet">-->
+      <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="//cdn.jsdelivr.net/animatecss/3.2.0/animate.css" rel="stylesheet">
+
+
     <![endif]-->
     
     <!--angularjs-->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.js"></script>    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.js"></script>
     <!--angular bootstrap-->
     <script src="scripts/ui-bootstrap-tpls-0.12.0.js" type="text/javascript"></script>
     <script type="text/javascript" src="app.js"></script>
@@ -80,58 +92,91 @@
       <script type="text/javascript" src="filters/customFilters.js"></script>
       <script type="text/javascript" src="controllers/collectionsController.js"></script>
       <script type="text/javascript" src="controllers/modalController.js"></script>
-    
+      <script type="text/javascript" src="controllers/login.js"></script>
+      <script type="text/javascript" src="controllers/logout.js"></script>
+      <script type="text/javascript" src="controllers/signup.js"></script>
+      <script type="text/javascript" src="controllers/profile.js"></script>
+      <script src="services/account.js"></script>
+      <script src="directives/passwordStrength.js"></script>
+      <script src="directives/passwordMatch.js"></script>
+
+      <!--third party-->
+      <script src="libraries/angular-strap.js"></script>
+      <script src="libraries/angular-strap.tpl.js"></script>
+      <script src="libraries/angular-messages.js"></script>
+      <script src="libraries/angular-animate.js"></script>
+      <script src="libraries/satellizer.js"></script>
+
+      <script src="libraries/angular-resource.js"></script>
+      <script src="libraries/angular-ui-router.js"></script>
+
+
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
    <!--<script src="js/bootstrap.min.js"></script>-->
+
+
+
     
   </head>
   <body ng-controller="shopController as controller" >
-  	<div class="navbar navbar-inverse navbar-fixed-top" >
+
+  	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   	
-  		<div class="container" ng-controller="HeaderCtrl">
+  		<div class="container-fluid" ng-controller="HeaderCtrl">
+
   			<div class="navbar-header" >
-  			<a  href="#/home" class="navbar-brand" ng-class="{ active: isActive('/home')}">ShopInFlock</a>
+                <a  href="#/home" class="navbar-brand" ng-class="{ active: isActive('/home')}">ShopInFlock</a>
+
+                <button type="button" class="navbar-toggle"
+                        ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed" >
+
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+
+            </div>
+
   			
-  			
-  				
-  			<button type="button" class="navbar-toggle"
-  				 ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed" >
-  				<span class="sr-only">Toggle navigation</span>
-  				<span class="icon-bar"></span>
-  				<span class="icon-bar"></span>
-  				<span class="icon-bar"></span>
-  			</div>
-  			
-  			<div class="navbar-collapse" collapse="isCollapsed" ng-controller="DropdownCtrl">
+  			<div class="navbar-collapse collapse" collapse="isCollapsed" ng-controller="DropdownCtrl">
   				<ul class="navbar-nav nav">
   					<li ng-class="{ active: isActive('/flocks')}"><a href="#/flocks">My Flocks</a></li>
   					<li ng-class="{ active: isActive('/shops')}"><a href="#/shops">My Shops</a></li>
   					<li ng-class="{ active: isActive('/lists')}"><a href="#/lists">My Lists</a></li>
   				</ul>
+
   				
   				<ul class="navbar-nav nav navbar-right">
   					<li><a href="#" class="glyphicon glyphicon-signal"></a></li>
   					<li><a href="#/notifications" class="glyphicon glyphicon-bell"></a></li>
   					<!--<li><a href="#" class="glyphicon glyphicon-user"></a></li>-->
-  					
+
   					<!--dropdown dashboard-->
   					<li class="dropdown" dropdown on-toggle="toggled(open)">
   					<a href="#" class="dropdown-toggle glyphicon glyphicon-user" dropdown-toggle>
   					<span class="caret"></span></a>
   					<ul class="dropdown-menu">
-        				<li ng-repeat="choice in items">
+        				<li ng-if="isAuthenticated()" ng-repeat="choice in loggedin">
           					<a href="#/{{choice.url}}">{{choice.text}}</a>
         				</li>
+                        <li ng-if="!isAuthenticated()" ng-repeat="choice in notLoggedind">
+                            <a href="#/{{choice.url}}">{{choice.text}}</a>
+                        </li>
       				</ul>
-    				</li>	
-  			<!--end dropdown-->
+    				</li>
+  			        <!--end dropdown-->
+
   				</ul> 
   			</div>
+
+
   		</div>
-  		
-  </div>
+
+  </nav>
   
   <div class="container">
   <div ng-view></div>
@@ -144,6 +189,6 @@
     	
 
 
-    
+
   </body>
 </html>

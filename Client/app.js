@@ -1,17 +1,35 @@
 (function(){
-	var app = angular.module("SIF", ["ui.bootstrap", "ngRoute", "customFilters"]);
+	var app = angular.module("SIF", ["ui.bootstrap", "ngRoute", "customFilters", "satellizer", 'ngResource', 'ngMessages', 'ui.router', 'mgcrea.ngStrap']);
 	
-	app.config(['$routeProvider',
-		function ($routeProvider){
+	app.config(
+		function ($routeProvider, $authProvider){
 		$routeProvider.when("/flocks", {templateUrl: 'views/flocks.html'});
 		$routeProvider.when("/shops", {templateUrl: "views/shops.html"});
 		$routeProvider.when("/lists", {templateUrl: "views/lists.html"});
-		
+			$routeProvider.when("/login", {templateUrl: "views/login.html"});
+			$routeProvider.when("/profile", {templateUrl: "views/profile.html"});
+			$routeProvider.when("/logout", {templateUrl: "views/home.html", controller: 'LogoutCtrl'});
+			$routeProvider.when("/signup", {templateUrl: "views/signup.html"});
+
 		$routeProvider.otherwise({templateUrl: "views/home.html"});
+
+			$authProvider.facebook({
+				clientId: '721747967923442'
+			});
+			$authProvider.google({
+				clientId: '631036554609-v5hm2amv4pvico3asfi97f54sc51ji4o.apps.googleusercontent.com'
+			});
+			$authProvider.github({
+				clientId: '0ba2600b1dbdb756688b'
+			});
+			$authProvider.linkedin({
+				clientId: '77cw786yignpzj'
+			});
+
 		
-	}]);
+	});
 	
-	app.controller('shopController', function() {
+	app.controller('shopController', function($scope) {
 		this.shops = myShops;
 		this.products = myProducts;
 
@@ -74,12 +92,21 @@ app.controller('HeaderCtrl', function ($scope, $location) {
 });
 
 //dropdown controller    
-app.controller('DropdownCtrl', function ($scope, $log) {
-  $scope.items = [
+app.controller('DropdownCtrl', function ($scope, $log, $auth) {
+  $scope.loggedin = [
    { text: 'Profile', url: "profile"},
     {text: 'Settings', url: "settings"},
-    {text: 'Log out', url: "logout"}
+    {text: 'Logout', url: "logout"},
   ];
+
+	$scope.notLoggedind = [
+		{text: 'Login', url: "login"},
+		{text: 'Sign up', url: "signup"}
+	];
+
+	$scope.isAuthenticated = function() {
+		return $auth.isAuthenticated();
+	};
 
   $scope.status = {
     isopen: false
@@ -95,7 +122,9 @@ app.controller('DropdownCtrl', function ($scope, $log) {
     $scope.status.isopen = !$scope.status.isopen;
   };
 });
-	
+
+
+
 	var myShops = [{
 		stars: 4,
 		name: 'Enzo',

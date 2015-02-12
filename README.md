@@ -1,6 +1,8 @@
 # SIF
 
-/usr/local/bin/SIFServer.js
+- start mongo i /usr/local/bin/: sudo mongod
+- start server:
+/usr/local/bin/SIFServer.js eller satserver.js
 
 terminal: node SIFServer.js
 
